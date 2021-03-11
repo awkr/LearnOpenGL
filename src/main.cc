@@ -29,7 +29,12 @@ int main() {
 
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
-  gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    std::cout << "failed to initialize GLAD" << std::endl;
+    return EXIT_FAILURE;
+  }
+
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
   float vertices[] = {
