@@ -1,13 +1,6 @@
-// #ifdef __APPLE__
-// #define GL_SILENCE_DEPRECATION
-// #include <OpenGL/gl3.h>
-// #include <OpenGL/gl3ext.h>
-// #endif
-
-#include <glad/glad.h>
-
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-
+#include <glad/glad.h>
 #include <iostream>
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
