@@ -9,8 +9,7 @@ void processInput(GLFWwindow *window);
 int main() {
   std::cout << "hello, world." << std::endl;
 
-  /* Initialize the library */
-  if (!glfwInit())
+  if (!glfwInit()) // initialize the library
     return EXIT_FAILURE;
 
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -27,15 +26,13 @@ int main() {
     return EXIT_FAILURE;
   }
 
-  /* Make the window's context current */
-  glfwMakeContextCurrent(window);
+  glfwMakeContextCurrent(window); // make the window's context current
+  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     std::cout << "failed to initialize GLAD" << std::endl;
     return EXIT_FAILURE;
   }
-
-  glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
   float vertices[] = {
       // clang-format off
