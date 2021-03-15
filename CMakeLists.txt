@@ -12,12 +12,15 @@ add_subdirectory(thirdparty/glfw-3.3.3)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-include_directories(${GLFW_INCLUDE_DIR})
+target_include_directories(learnopengl PUBLIC ${GLFW_INCLUDE_DIR})
 
 # glad
 set(GLAD_DIR "thirdparty/glad")
 add_library(glad "${GLAD_DIR}/src/glad.c")
-target_include_directories(glad PRIVATE "${GLAD_DIR}/include")
-target_include_directories(learnopengl PRIVATE "${GLAD_DIR}/include")
+target_include_directories(glad PUBLIC "${GLAD_DIR}/include")
+target_include_directories(learnopengl PUBLIC "${GLAD_DIR}/include")
+
+# stb_image
+target_include_directories(learnopengl PUBLIC "thirdparty/stb")
 
 target_link_libraries(learnopengl glfw glad)
