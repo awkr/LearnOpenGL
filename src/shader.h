@@ -16,6 +16,7 @@ public:
   // constructor generates the shader on the fly
   Shader(const GLchar *vertexPath, const GLchar *fragmentPath);
   ~Shader() { glad_glDeleteProgram(id); };
+  GLuint get_id() const { return id; };
   void use() { glad_glUseProgram(id); }
   // utility uniform functions
   void setBool(const std::string &name, bool value) const {
