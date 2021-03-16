@@ -23,4 +23,8 @@ target_include_directories(learnopengl PUBLIC "${GLAD_DIR}/include")
 # stb_image
 target_include_directories(learnopengl PUBLIC "thirdparty/stb")
 
+# glm
+add_subdirectory("thirdparty/glm")
+target_link_libraries(learnopengl glm)
+
 target_link_libraries(learnopengl glfw glad)
