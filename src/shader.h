@@ -28,9 +28,10 @@ public:
   void setFloat(const std::string &name, float value) const {
     glad_glUniform1f(glad_glGetUniformLocation(id, name.c_str()), value);
   }
-  void setMat4(const std::string &name, const GLfloat *v) const {
+
+  void set_mat4fv(const std::string &name, const glm::mat4 &mat) const {
     GLint loc = glad_glGetUniformLocation(id, name.c_str());
-    glad_glUniformMatrix4fv(loc, 1, GL_FALSE, v);
+    glad_glUniformMatrix4fv(loc, 1, GL_FALSE, &mat[0][0]);
   }
 };
 

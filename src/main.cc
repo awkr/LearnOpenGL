@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
   // position attribute
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void *)0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), nullptr);
   glEnableVertexAttribArray(0);
   // color attribute
   glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void *)(3 * sizeof(GL_FLOAT)));
@@ -152,6 +152,19 @@ int main(int argc, char **argv) {
 
   // shader.setMat4("transform", glm::value_ptr(trans));
 
+  // create transformations
+
+  glm::mat4 model = glm::mat4(1.0f);
+  glm::mat4 view = glm::mat4(1.0f);
+  glm::mat4 projection = glm::mat4(1.0f);
+  model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+  view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+  projection = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 100.0f);
+
+  shader.set_mat4fv("model", model);
+  shader.set_mat4fv("view", view);
+  shader.set_mat4fv("projection", projection);
+
   while (!glfwWindowShouldClose(window)) {
     processInput(window);
 
@@ -168,11 +181,12 @@ int main(int argc, char **argv) {
     // set the texture mix value in the shader
     shader.setFloat("mixValue", mixValue);
 
-    // create transform
-    glm::mat4 trans(1.0);
-    // trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
-    trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
-    shader.setMat4("transform", glm::value_ptr(trans));
+    // create transformations
+
+    // glm::mat4 trans(1.0);
+    // // trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+    // trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+    // shader.setMat4("transform", glm::value_ptr(trans));
 
     // shader.use();
 
