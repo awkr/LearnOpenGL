@@ -3,8 +3,10 @@ project(learnopengl)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(
-    learnopengl
-    src/main.cc
+        learnopengl
+        src/main.cc
+        src/shader.h
+        src/camera.h
 )
 
 # glfw

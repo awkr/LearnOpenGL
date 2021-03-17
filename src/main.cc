@@ -11,15 +11,29 @@
 
 #include <iostream>
 
+#include "camera.h"
 #include "shader.h"
 
-const int WIN_WIDTH = 640;
-const int WIN_HEIGHT = 480;
+// settings
+const int WIN_WIDTH = 800;
+const int WIN_HEIGHT = 600;
+
+// camera
+Camera camera(glm::vec3(.0f, .0f, 5.0f));
+bool firstMouse = true;
+double lastX = .0;
+double lastY = .0;
+
+// timing
+float deltaTime = .0f; // time between current frame and last frame
+float lastFrame = .0f;
 
 // how much we're seeing of either texture
 float mixValue = 0.2f;
 
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
+void mouseCallback(GLFWwindow *window, double x, double y);
+void scrollCallback(GLFWwindow *window, double xOffset, double yOffset);
 void processInput(GLFWwindow *window);
 
 int main(int argc, char **argv) {
@@ -44,7 +58,11 @@ int main(int argc, char **argv) {
 
   glfwMakeContextCurrent(window); // make the window's context current
   glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+  glfwSetCursorPosCallback(window, mouseCallback);
+  glfwSetScrollCallback(window, scrollCallback);
+  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+  // load all OpenGL function pointers
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     std::cerr << "failed to initialize GLAD" << std::endl;
     return EXIT_FAILURE;
@@ -54,6 +72,9 @@ int main(int argc, char **argv) {
   glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &attrCount);
   std::cout << "GL_MAX_VERTEX_ATTRIBS: " << attrCount << std::endl;
   std::cout << "size of GLfloat: " << sizeof(GLfloat) << " byte(s)" << std::endl;
+
+  // configure global opengl state
+  glad_glEnable(GL_DEPTH_TEST);
 
   // build and compile shader program
   Shader shader("shaders/shader.vert", "shaders/shader.frag");
@@ -142,6 +163,7 @@ int main(int argc, char **argv) {
   stbi_image_free(data);
 
   shader.use();
+
   shader.setInt("texture0", 0);
   shader.setInt("texture1", 1);
 
@@ -155,28 +177,40 @@ int main(int argc, char **argv) {
   // create transformations
 
   glm::mat4 model = glm::mat4(1.0f);
-  glm::mat4 view = glm::mat4(1.0f);
-  glm::mat4 projection = glm::mat4(1.0f);
   model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-  projection = glm::perspective(glm::radians(45.0f), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 100.0f);
-
   shader.set_mat4fv("model", model);
-  shader.set_mat4fv("view", view);
+
+  // pass projection matrix to shader (as projection matrix rarely changes there's no need to do this per frame)
+  glm::mat4 projection =
+      glm::perspective(glm::radians(camera.zoom), (float)WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 100.0f);
   shader.set_mat4fv("projection", projection);
 
   while (!glfwWindowShouldClose(window)) {
+    double currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+
     processInput(window);
 
     // render
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // bind textures on corresponding texture units
     glad_glActiveTexture(GL_TEXTURE0);
     glad_glBindTexture(GL_TEXTURE_2D, texture0);
     glad_glActiveTexture(GL_TEXTURE1);
     glad_glBindTexture(GL_TEXTURE_2D, texture1);
+
+    // camera/view transform
+    //    float radius = 2.0f;
+    //    double cam_x = sin(glfwGetTime()) * radius;
+    //    double cam_z = cos(glfwGetTime()) * radius;
+    //    glm::mat4 view = glm::mat4(1.0f);
+    //    view = glm::lookAt(glm::vec3(cam_x, 0.0f, cam_z), glm::vec3(.0f, .0f, .0f), glm::vec3(.0f, 1.0f, .0f));
+
+    glm::mat4 view = camera.getViewMatrix();
+    shader.set_mat4fv("view", view);
 
     // set the texture mix value in the shader
     shader.setFloat("mixValue", mixValue);
@@ -192,7 +226,7 @@ int main(int argc, char **argv) {
 
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     // glDrawArrays(GL_TRIANGLES, 0, 6);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
@@ -206,6 +240,23 @@ int main(int argc, char **argv) {
   return EXIT_SUCCESS;
 }
 
+void mouseCallback(GLFWwindow *window, double x, double y) {
+  if (firstMouse) {
+    lastX = x;
+    lastY = y;
+    firstMouse = false;
+  }
+
+  auto xOffset = lastX - x;
+  auto yOffset = y - lastY;
+  lastX = x;
+  lastY = y;
+
+  camera.processMouseMovement(xOffset, yOffset);
+}
+
+void scrollCallback(GLFWwindow *window, double xOffset, double yOffset) { camera.processMouseScroll(yOffset); }
+
 // glfw: whenever the window size changed, this callback function executes
 void framebufferSizeCallback(GLFWwindow *window, int width, int height) {
   // make sure the viewport matches the new window dimensions; note that width and height will be significantly larger
@@ -216,6 +267,16 @@ void framebufferSizeCallback(GLFWwindow *window, int width, int height) {
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
+
+  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    camera.processKeyboard(FORWARD, deltaTime);
+  } else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    camera.processKeyboard(BACKWARD, deltaTime);
+  } else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+    camera.processKeyboard(LEFT, deltaTime);
+  } else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+    camera.processKeyboard(RIGHT, deltaTime);
+  }
 
   if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
     if (mixValue += 0.004f; mixValue > 1.0f)
