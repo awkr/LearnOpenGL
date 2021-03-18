@@ -11,8 +11,8 @@
 
 #include <iostream>
 
-#include "camera.h"
-#include "shader.h"
+#include <base/camera.h>
+#include <base/shader.h>
 
 // settings
 const int WIN_WIDTH = 800;
@@ -98,8 +98,7 @@ int main(int argc, char **argv) {
   glGenBuffers(1, &vbo);
   glGenBuffers(1, &ebo);
 
-  // bind the vertex array object first, then bind and set vertex buffers, and
-  // then configure vertex attributes
+  // bind the vertex array object first, then bind and set vertex buffers, and then configure vertex attributes
   glBindVertexArray(vao);
 
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
