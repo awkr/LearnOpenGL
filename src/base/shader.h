@@ -29,6 +29,11 @@ public:
     glad_glUniform1f(glad_glGetUniformLocation(id, name.c_str()), value);
   }
 
+  void setVec3(const std::string &name, const glm::vec3 vec) const {
+	GLint loc = glad_glGetUniformLocation(id, name.c_str());
+    glad_glUniform3fv(loc, 1, &vec[0]);
+  }
+  
   void setVec3(const std::string &name, const float x, const float y, const float z) const {
     GLint loc = glad_glGetUniformLocation(id, name.c_str());
     glad_glUniform3f(loc, x, y, z);

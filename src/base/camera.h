@@ -16,6 +16,7 @@ const float ZOOM = 45.0f;
 // use in OpenGL
 class Camera {
 public:
+  glm::vec3 position;
   float zoom;
 
   Camera(glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW,
@@ -76,7 +77,6 @@ public:
 
 private:
   // attributes
-  glm::vec3 position;
   glm::vec3 front;
   glm::vec3 up;
   glm::vec3 right;

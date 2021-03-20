@@ -87,47 +87,47 @@ int main(int argc, char **argv) {
 
   float vertices[] = {
       // clang-format off
-      -0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f,  0.5f, -0.5f,
-      0.5f,  0.5f, -0.5f,
-      -0.5f,  0.5f, -0.5f,
-      -0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-      -0.5f, -0.5f,  0.5f,
-      0.5f, -0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
-      -0.5f, -0.5f,  0.5f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
-      -0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f, -0.5f,
-      -0.5f, -0.5f, -0.5f,
-      -0.5f, -0.5f, -0.5f,
-      -0.5f, -0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-      0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
+    0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+    0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+    0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+    0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+    0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-      -0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f, -0.5f,
-      0.5f, -0.5f,  0.5f,
-      0.5f, -0.5f,  0.5f,
-      -0.5f, -0.5f,  0.5f,
-      -0.5f, -0.5f, -0.5f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+    0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+    0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-      -0.5f,  0.5f, -0.5f,
-      0.5f,  0.5f, -0.5f,
-      0.5f,  0.5f,  0.5f,
-      0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f,  0.5f,
-      -0.5f,  0.5f, -0.5f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+    0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
       // clang-format on
   };
 
@@ -142,8 +142,11 @@ int main(int argc, char **argv) {
   glBindVertexArray(cubeVAO);
 
   // position attribute
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), nullptr);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), nullptr);
   glEnableVertexAttribArray(0);
+  // normal attribute
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), (void *)(3 * sizeof(GL_FLOAT)));
+  glEnableVertexAttribArray(1);
 
   // second, configure the light's VAO
   unsigned int lightCubeVAO;
@@ -152,7 +155,7 @@ int main(int argc, char **argv) {
 
   glad_glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), nullptr);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GL_FLOAT), nullptr);
   glEnableVertexAttribArray(0);
 
   while (!glfwWindowShouldClose(window)) {
@@ -166,9 +169,14 @@ int main(int argc, char **argv) {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    lightPos.x = 1.0f + sin(glfwGetTime()) * 2.0f;
+    lightPos.y = sin(glfwGetTime() / 2.0f) * 1.0f;
+
     lightingShader.use();
     lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
     lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    lightingShader.setVec3("lightPos", lightPos);
+    lightingShader.setVec3("viewPos", camera.position);
 
     // view/projection transformations
     glm::mat4 projection =
