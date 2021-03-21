@@ -19,7 +19,7 @@ const int WIN_WIDTH = 800;
 const int WIN_HEIGHT = 600;
 
 // camera
-Camera camera(glm::vec3(.0f, .0f, 5.0f));
+Camera camera(glm::vec3(.0f, .0f, 3.0f));
 bool firstMouse = true;
 double lastX = .0;
 double lastY = .0;
@@ -199,15 +199,16 @@ int main(int argc, char **argv) {
     lightingShader.use();
     lightingShader.setVec3("light.position", camera.position);
     lightingShader.setVec3("light.direction", camera.front);
-    lightingShader.setFloat("light.cutoff", glm::cos(glm::radians(12.5f)));
-    lightingShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-    lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+    lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
+    lightingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+    lightingShader.setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
+    lightingShader.setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
     lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
     lightingShader.setFloat("light.constant", 1.0f);
     lightingShader.setFloat("light.linear", 0.09f);
     lightingShader.setFloat("light.quadratic", 0.032f);
 
-    lightingShader.setFloat("material.shininess", 64.0f);
+    lightingShader.setFloat("material.shininess", 32.0f);
 
     lightingShader.setVec3("viewPos", camera.position);
 
