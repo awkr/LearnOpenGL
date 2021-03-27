@@ -10,8 +10,8 @@ cmake -B build \
 	  -G Ninja
 
 
-cmake --build build --config Debug --target light -- -j 6
+cmake --build build --config Debug --target model-loading -- -j 6
 
 echo "build: succeed"
 
-build/example/light/light 
+build/example/model-loading/model-loading
