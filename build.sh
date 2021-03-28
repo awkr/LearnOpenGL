@@ -2,6 +2,8 @@
 
 set -e
 
+TARGET=stencil-testing
+
 # build
 cmake -B build \
 	  -DCMAKE_BUILD_TYPE=Debug \
@@ -10,8 +12,8 @@ cmake -B build \
 	  -G Ninja
 
 
-cmake --build build --config Debug --target model-loading -- -j 6
+cmake --build build --config Debug --target $TARGET -- -j 6
 
 echo "build: succeed"
 
-build/example/model-loading/model-loading
+build/example/$TARGET/$TARGET

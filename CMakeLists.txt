@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 add_subdirectory(src)
 add_subdirectory(example/light)
 add_subdirectory(example/model-loading)
+add_subdirectory(example/stencil-testing)
 
 # glfw
 add_subdirectory(thirdparty/glfw-3.3.3)
@@ -20,6 +21,7 @@ target_include_directories(glad PUBLIC "${GLAD_DIR}/include")
 # stb_image
 target_include_directories(light PUBLIC "thirdparty/stb")
 target_include_directories(model-loading PUBLIC "thirdparty/stb")
+target_include_directories(stencil-testing PUBLIC "thirdparty/stb")
 
 # glm
 add_subdirectory("thirdparty/glm")
